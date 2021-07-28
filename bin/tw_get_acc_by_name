@@ -1,0 +1,67 @@
+#!/bin/bash
+
+money_path="$(pwd)"
+SCRIPTPATH="$( cd -- "$(dirname "$0")" || exit 1 >/dev/null 2>&1 ; pwd -P )"
+cd "$SCRIPTPATH" || exit 1
+cd ../../../.. || exit 1
+
+if [ ! -f lib/lib.sh ]
+then
+    echo "Error: lib/lib.sh not found!"
+    echo "make sure you are in the root of the server repo"
+    exit 1
+fi
+
+# shellcheck disable=SC1091
+source lib/lib.sh
+
+function show_help() {
+	echo "usage: $(basename "$0") [OPTION] <username>"
+	echo "description:"
+	echo "  searches for account in money history files"
+	echo "  by default the current path is used to search history files"
+	echo "  use --autoexec-dir to load the path from the config"
+	echo "options:"
+	echo "  --help | -h		show this help"
+	echo "  --autoexec-dir | -a	use directory found in autoexec.cfg"
+	exit 0
+}
+
+if [ "$#" -eq "0" ]
+then
+	show_help
+fi
+
+username=''
+
+for arg in "$@"
+do
+	if [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
+	then
+		show_help
+	elif [ "$arg" == "--autoexec-dir" ] || [ "$arg" == "-a" ]
+	then
+		money_path="$HOME/.teeworlds/dumps/$(get_tw_config sv_money_history_file_path money_history)"
+	else
+		username="$arg"
+	fi
+done
+cd "$money_path" || exit 1
+
+if [ "$username" == "" ]
+then
+	echo "Error: missing argument username. See --help."
+	exit 1
+fi
+
+# rg -F "' name='$username'" | \
+
+# Used this complex awk to ensure username is fixed string but at the end of the line
+
+search="' name='$username'" \
+	awk 'substr($0, length($0) - length(ENVIRON["search"]) + 1, length($0)) == ENVIRON["search"] { print }' * | \
+	cut -d"'" -f2 | \
+	sort | \
+	uniq -c | \
+	sort -nr
+
