@@ -40,6 +40,7 @@ const ShellIpByName = new ShellCommand("cd $(./lib/eval_lib.sh 'echo $LOGS_PATH_
 const ShellNameByIp = new ShellCommand("cd $(./lib/eval_lib.sh 'echo $LOGS_PATH_FULL') && tw_get_name_by_ip")
 const ShellAccByName = new ShellCommand('bash ./lib/plugins/server-plugin-web/bin/tw_get_acc_by_name -a')
 const ShellNameByAcc = new ShellCommand('bash ./lib/plugins/server-plugin-web/bin/tw_get_name_by_acc -a')
+const ShellEcon = new ShellCommand('bash ./lib/econ.sh')
 
 const log = (msg) => {
   const ts = new Date()
@@ -95,6 +96,12 @@ http.createServer((request, response) => {
       return
     }
     response.end(JSON.stringify({ message: 'names used', stdout: ShellNameByAcc.run(args[0]) }))
+  } else if (cmd === 'econ') {
+    if (args[0] === undefined) {
+      response.end(JSON.stringify({ error: 'missing arg: command' }))
+      return
+    }
+    response.end(JSON.stringify({ message: 'names used', stdout: ShellEcon.run(args[0]) }))
   } else {
     response.end(JSON.stringify({ error: 'invalid command' }))
   }
