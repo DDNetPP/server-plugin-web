@@ -17,7 +17,7 @@ class ShellCommand {
     this.cache = ''
   }
 
-  run(arg) {
+  run (arg) {
     const timeNow = performance.now()
     const diff = timeNow - this.lastCache
     if (diff < 2000 && arg === this.lastRequest) {
