@@ -101,7 +101,7 @@ http.createServer((request, response) => {
       response.end(JSON.stringify({ error: 'missing arg: command' }))
       return
     }
-    response.end(JSON.stringify({ message: 'names used', stdout: ShellEcon.run(args[0]) }))
+    response.end(JSON.stringify({ message: 'names used', stdout: ShellEcon.run(args.join(' ')) }))
   } else {
     response.end(JSON.stringify({ error: 'invalid command' }))
   }
