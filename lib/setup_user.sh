@@ -15,23 +15,61 @@ then
 	exit 1
 fi
 
+function show_help() {
+	echo "usage: ./setup_user.sh [OPTION]"
+	echo "description:"
+	echo "  make sure to run ./setup_sudo.sh first once to setup things"
+	echo "  then this script will run the node server and setup the website"
+	echo "  use the -r arg to update"
+	echo "options:"
+	echo "  -r | --restart 		force restart running server"
+}
+
+arg_force_restart=0
+for arg in "$@"
+do
+	if [ "$arg" == "-r" ] || [ "$arg" == "--restart" ]
+	then
+		arg_force_restart=1
+	elif [ "$arg" == "-h" ] || [ "$arg" == "--help" ]
+	then
+		show_help
+		exit 0
+	else
+		err "Unknown argument see --help"
+		exit
+	fi
+done
+
 function setup_cpu_logger() {
 	echo "[!] WARNING: THIS CPU LOGGER IS DEPRECATED BY THE NODE APP VERSION"
-	if pgrep -f 'SCREEN -AmdS cpu_logger .*cpu_to_web.sh' > /dev/null
+	if pgrep -f "SCREEN -AmdS cpu_logger_$SRV_NAME .*cpu_to_web.sh" > /dev/null
 	then
-		return
+		if [ "$arg_force_restart" == "1" ]
+		then
+			log "stoppging cpu logger ..."
+			pkill -f "SCREEN -AmdS cpu_logger_$SRV_NAME .*cpu_to_web.sh"
+		else
+			return
+		fi
 	fi
 	(
 		echo "[*] starting cpu logger ..."
 		cd "$SCRIPT_ROOT" || exit 1
-		screen -AmdS cpu_logger ./lib/plugins/server-plugin-web/cpu_to_web.sh
+		screen -AmdS cpu_logger_"$CFG_SRV_NAME" ./lib/plugins/server-plugin-web/cpu_to_web.sh
 	)
 }
 
 function setup_node_api_server() {
 	if pgrep -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*index.js" > /dev/null
 	then
-		return
+		if [ "$arg_force_restart" == "1" ]
+		then
+			log "stopping node api server ..."
+			pkill -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*index.js"
+		else
+			return
+		fi
 	fi
 	if [ ! -x "$(command -v npm)" ]
 	then

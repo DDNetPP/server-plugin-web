@@ -5,5 +5,5 @@ then
 	cd ../../../
 fi
 
-./lib/plugins/server-plugin-web/lib/setup_user.sh
+./lib/plugins/server-plugin-web/lib/setup_user.sh "$@"
 
