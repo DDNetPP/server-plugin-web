@@ -29,7 +29,7 @@ function setup_cpu_logger() {
 }
 
 function setup_node_api_server() {
-	if pgrep -f 'SCREEN -AmdS ddpp_node_api_server .*index.js' > /dev/null
+	if pgrep -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*index.js" > /dev/null
 	then
 		return
 	fi
@@ -57,7 +57,7 @@ function setup_node_api_server() {
 		echo "[*] starting cpu logger (node app) ..."
 		echo "logdir=$CFG_POST_LOGS_DIR"
 		cd "$SCRIPT_ROOT" || exit 1
-		screen -AmdS ddpp_node_api_server sh -c "PL_WEB_API_TOKEN=$CFG_PL_WEB_API_TOKEN node ./lib/plugins/server-plugin-web/index.js"
+		screen -AmdS node_api_server_"$CFG_SRV_NAME" sh -c "PL_WEB_API_TOKEN=$CFG_PL_WEB_API_TOKEN node ./lib/plugins/server-plugin-web/index.js"
 		echo "[*] building frontend ..."
 		cd ./lib/plugins/server-plugin-web/frontend || exit 1
 		npm install
