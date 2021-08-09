@@ -100,12 +100,12 @@ cpu.html,querys.html}
 
 	if [ ! -f "$CFG_POST_LOGS_DIR"/.htaccess ]
 	then
-sudo tee -a "$CFG_POST_LOGS_DIR"/.htaccess > /dev/null <<EOT
-AuthType Basic
-AuthName "restricted area"
-AuthUserFile "$CFG_POST_LOGS_DIR"/.htpasswd
-require valid-user
-EOT
+		sudo tee -a "$CFG_POST_LOGS_DIR"/.htaccess > /dev/null <<-EOT
+			AuthType Basic
+			AuthName "restricted area"
+			AuthUserFile "$CFG_POST_LOGS_DIR/.htpasswd"
+			require valid-user
+		EOT
 		echo "[!] enable $(tput bold)AllowOverride All$(tput sgr0) for /var/www"
 		tput bold
 		echo "  sudo vim /etc/apache2/apache2.conf"
