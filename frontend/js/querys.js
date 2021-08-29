@@ -67,26 +67,31 @@ const showResultTraffic = (result) => {
 
 ipByNameForm.addEventListener('submit', (event) => {
   event.preventDefault()
+  resultDoms[0].innerHTML = 'loading ...'
   execCmd(`ip_by_name&args=${ipByNameName.value}`, showResultIp, 'arg_name_by_ip')
 })
 
 nameByIpForm.addEventListener('submit', (event) => {
   event.preventDefault()
+  resultDoms[0].innerHTML = 'loading ...'
   execCmd(`name_by_ip&args=${nameByIpIp.value}`, showResultIp, 'arg_ip_by_name')
 })
 
 accByNameForm.addEventListener('submit', (event) => {
   event.preventDefault()
+  resultDoms[1].innerHTML = 'loading ...'
   execCmd(`acc_by_name&args=${accByNameName.value}`, showResultAcc, 'arg_name_by_acc')
 })
 
 nameByAccForm.addEventListener('submit', (event) => {
   event.preventDefault()
+  resultDoms[1].innerHTML = 'loading ...'
   execCmd(`name_by_acc&args=${nameByAccName.value}`, showResultAcc, 'arg_acc_by_name')
 })
 
 filterIpForm.addEventListener('submit', (event) => {
   event.preventDefault()
+  resultDoms[2].innerHTML = 'loading ...'
   execCmd(`filter_ip&args=${filterIpIp.value} logfile`, showResultFilterIp, 'plain')
 })
 
@@ -97,18 +102,23 @@ const acc_by_name = url.searchParams.get('arg_acc_by_name')
 const name_by_acc = url.searchParams.get('arg_name_by_acc')
 const filter_ip = url.searchParams.get('filter_ip')
 if (ip_by_name) {
+  resultDoms[0].innerHTML = 'loading ...'
   execCmd(`ip_by_name&args=${ip_by_name}`, showResultIp, 'arg_name_by_ip')
 }
 if (name_by_ip) {
+  resultDoms[0].innerHTML = 'loading ...'
   execCmd(`name_by_ip&args=${name_by_ip}`, showResultIp, 'arg_ip_by_name')
 }
 if (acc_by_name) {
+  resultDoms[1].innerHTML = 'loading ...'
   execCmd(`acc_by_name&args=${acc_by_name}`, showResultAcc, 'arg_name_by_acc')
 }
 if (name_by_acc) {
+  resultDoms[1].innerHTML = 'loading ...'
   execCmd(`name_by_acc&args=${name_by_acc}`, showResultAcc, 'arg_acc_by_name')
 }
 if (filter_ip) {
+  resultDoms[2].innerHTML = 'loading ...'
   execCmd(`filter_ip&args=${filter_ip}`, showResultFilterIp, 'plain')
 }
 
