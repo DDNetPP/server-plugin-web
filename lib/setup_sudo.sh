@@ -11,19 +11,32 @@ fi
 
 source lib/lib.sh
 
+groupadd=groupadd
+usermod=usermod
+
 function setup_apache_log_server() {
 	local web_group="ddpp-web-$CFG_SRV_NAME"
 	local web_user
 	# TODO: call some lib/lib.sh check_dep func here instead
 	if [ ! -x "$(command -v groupadd)" ]
 	then
-		echo "[-] Error: missing command groupadd"
-		exit 1
+		if [ -f /usr/sbin/groupadd ]
+		then
+			groupadd=/usr/sbin/groupadd
+		else
+			echo "[-] Error: missing command groupadd"
+			exit 1
+		fi
 	fi
 	if [ ! -x "$(command -v usermod)" ]
 	then
-		echo "[-] Error: missing command usermod"
-		exit 1
+		if [ -f /usr/sbin/usermod ]
+		then
+			usermod=/usr/sbin/usermod
+		else
+			echo "[-] Error: missing command usermod"
+			exit 1
+		fi
 	fi
 	if [ ! -x "$(command -v sudo)" ]
 	then
@@ -75,9 +88,9 @@ server_log.txt,\
 paste.txt,raw_build.txt,status.txt,gprof.svg,\
 cpu.html,querys.html}
 
-	sudo groupadd "$web_group"
-	sudo usermod -aG "$web_group" "$CFG_UNIX_USER"
-	sudo usermod -aG "$web_group" "$web_user"
+	sudo "$groupadd" "$web_group"
+	sudo "$usermod" -aG "$web_group" "$CFG_UNIX_USER"
+	sudo "$usermod" -aG "$web_group" "$web_user"
 
 	sudo chown -R "$web_user":"$web_group" "$CFG_POST_LOGS_DIR"/*
 	sudo chown www-data:"$web_group" "$CFG_POST_LOGS_DIR"/
