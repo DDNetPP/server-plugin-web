@@ -52,7 +52,8 @@ const generateResultTraffic = (result, type) => {
 const generateResultLogfiles = (result, ipAddr) => {
   let hrefResult = ''
   result.split('\n').forEach((row) => {
-    hrefResult += `<a href="?filter_ip=${ipAddr}&logfile=${row}">${row}</a>\n`
+    const dirs = row.split('/')
+    hrefResult += `<a href="?filter_ip=${ipAddr}&logfile=${row}">${dirs[dirs.length - 1]}</a>\n`
   })
   return hrefResult
 }
