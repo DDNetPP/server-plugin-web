@@ -80,7 +80,7 @@ const showResultGetLogfiles = (result, ipAddr) => {
     return
   }
   resultDoms[2].innerHTML = 'No matches found in latest logfile.\n'
-  resultDoms[2].innerHTML = 'Try one of the older ones that include your search:\n'
+  resultDoms[2].innerHTML += 'Try one of the older ones that include your search:\n'
   resultDoms[2].innerHTML += generateResultLogfiles(result, ipAddr)
 }
 
