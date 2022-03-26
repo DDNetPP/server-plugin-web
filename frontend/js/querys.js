@@ -68,7 +68,7 @@ const showResultAcc = (result, type) => {
 const showResultFilterIp = (result, ipAddr) => {
   if(result === '') {
     resultDoms[2].innerHTML = 'No matches found in latest logfile.'
-    execCmd(`get_logfiles?args=${ipAddr}`, showResultGetLogfiles, ipAddr)
+    execCmd(`get_logfiles&args=${ipAddr}`, showResultGetLogfiles, ipAddr)
     return
   }
   resultDoms[2].innerHTML = result
