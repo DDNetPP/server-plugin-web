@@ -50,7 +50,7 @@ const ShellAccByName = new ShellCommand('bash ./lib/plugins/server-plugin-web/bi
 const ShellNameByAcc = new ShellCommand('bash ./lib/plugins/server-plugin-web/bin/tw_get_name_by_acc -a')
 const ShellEcon = new ShellCommand('bash ./lib/econ.sh')
 const ShellGetLatestLog = new ShellCommand('./show_log.sh --filepath')
-const ShellGetLogfiles = new ShellCommand("./lib/eval_lib.sh 'ls $LOGS_PATH_FULL'")
+const ShellGetLogfiles = new ShellCommand("./lib/eval_lib.sh 'find $LOGS_PATH_FULL'")
 const ShellChatByIp = new ShellCommand('bash tw_filter_ip')
 
 const log = (msg) => {
