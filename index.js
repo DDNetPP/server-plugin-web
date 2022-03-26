@@ -50,6 +50,7 @@ const ShellAccByName = new ShellCommand('bash ./lib/plugins/server-plugin-web/bi
 const ShellNameByAcc = new ShellCommand('bash ./lib/plugins/server-plugin-web/bin/tw_get_name_by_acc -a')
 const ShellEcon = new ShellCommand('bash ./lib/econ.sh')
 const ShellGetLatestLog = new ShellCommand('./show_log.sh --filepath')
+const ShellGetLogfiles = new ShellCommand("./lib/eval_lib.sh 'ls $LOGS_PATH_FULL'")
 const ShellChatByIp = new ShellCommand('bash tw_filter_ip')
 
 const log = (msg) => {
@@ -117,6 +118,8 @@ http.createServer((request, response) => {
     }
     const logPath = ShellGetLatestLog.run()
     response.end(JSON.stringify({ message: 'filter chat', stdout: ShellChatByIp.run(args[0], logPath) }))
+  } else if (cmd === 'get_logfiles') {
+    response.end(JSON.stringify({ message: 'logfiles', stdout: ShellGetLogfiles.run() }))
   } else if (cmd === 'econ') {
     if (args[0] === undefined) {
       response.end(JSON.stringify({ error: 'missing arg: command' }))

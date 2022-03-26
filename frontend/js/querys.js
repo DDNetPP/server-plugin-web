@@ -49,6 +49,14 @@ const generateResultTraffic = (result, type) => {
   return hrefResult
 }
 
+const generateResultLogfiles = (result, ipAddr) => {
+  let hrefResult = ''
+  result.split('\n').forEach((row) => {
+    hrefResult += `<a href="?filter_ip=${ipAddr}&logfile=${row}">${row}</a>\n`
+  })
+  return hrefResult
+}
+
 const showResultIp = (result, type) => {
   resultDoms[0].innerHTML = generateResult(result, type)
 }
@@ -57,12 +65,18 @@ const showResultAcc = (result, type) => {
   resultDoms[1].innerHTML = generateResult(result, type)
 }
 
-const showResultFilterIp = (result, type) => {
+const showResultFilterIp = (result, ipAddr) => {
   if(result === '') {
     resultDoms[2].innerHTML = 'No matches found in latest logfile.'
+    execCmd(`get_logfiles`, showResultGetLogfiles, ipAddr)
     return
   }
-  resultDoms[2].innerHTML = generateResult(result, type)
+  resultDoms[2].innerHTML = result
+}
+
+const showResultGetLogfiles = (result, ipAddr) => {
+  resultDoms[2].innerHTML = 'No matches found in latest logfile. Try one of the older ones:\n'
+  resultDoms[2].innerHTML += generateResultLogfiles(result, ipAddr)
 }
 
 const showResultTraffic = (result) => {
@@ -96,7 +110,7 @@ nameByAccForm.addEventListener('submit', (event) => {
 filterIpForm.addEventListener('submit', (event) => {
   event.preventDefault()
   resultDoms[2].innerHTML = 'loading ...'
-  execCmd(`filter_ip&args=${filterIpIp.value} logfile`, showResultFilterIp, 'plain')
+  execCmd(`filter_ip&args=${filterIpIp.value} logfile`, showResultFilterIp, filterIpIp.value)
 })
 
 const url = new URL(document.location)
@@ -105,6 +119,7 @@ const name_by_ip = url.searchParams.get('arg_name_by_ip')
 const acc_by_name = url.searchParams.get('arg_acc_by_name')
 const name_by_acc = url.searchParams.get('arg_name_by_acc')
 const filter_ip = url.searchParams.get('filter_ip')
+const logfile = url.searchParams.get('logfile')
 if (ip_by_name) {
   resultDoms[0].innerHTML = 'loading ...'
   execCmd(`ip_by_name&args=${ip_by_name}`, showResultIp, 'arg_name_by_ip')
@@ -123,7 +138,7 @@ if (name_by_acc) {
 }
 if (filter_ip) {
   resultDoms[2].innerHTML = 'loading ...'
-  execCmd(`filter_ip&args=${filter_ip}`, showResultFilterIp, 'plain')
+  execCmd(`filter_ip&args=${filter_ip} ${logfile || 'logfile'}`, showResultFilterIp, filter_ip)
 }
 
 const onTick = () => {
