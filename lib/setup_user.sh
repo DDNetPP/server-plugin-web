@@ -61,12 +61,12 @@ function setup_cpu_logger() {
 }
 
 function setup_node_api_server() {
-	if pgrep -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*index.js" > /dev/null
+	if pgrep -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*api_backend.js" > /dev/null
 	then
 		if [ "$arg_force_restart" == "1" ]
 		then
 			log "stopping node api server ..."
-			pkill -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*index.js"
+			pkill -f "SCREEN -AmdS node_api_server_$CFG_SRV_NAME .*api_backend.js"
 		else
 			return
 		fi
@@ -95,7 +95,8 @@ function setup_node_api_server() {
 		echo "[*] starting cpu logger (node app) ..."
 		echo "logdir=$CFG_POST_LOGS_DIR"
 		cd "$SCRIPT_ROOT" || exit 1
-		screen -AmdS node_api_server_"$CFG_SRV_NAME" sh -c "PL_WEB_API_TOKEN=$CFG_PL_WEB_API_TOKEN node ./lib/plugins/server-plugin-web/index.js"
+		mkdir -p logs/plugins/server-plugin-web
+		screen -AmdS node_api_server_"$CFG_SRV_NAME" sh -c "PL_WEB_API_TOKEN=$CFG_PL_WEB_API_TOKEN node ./lib/plugins/server-plugin-web/api_backend.js 2>&1 | tee -a ./logs/plugins/server-plugin-web/api_backend.txt"
 		echo "[*] building frontend ..."
 		cd ./lib/plugins/server-plugin-web/frontend || exit 1
 		npm install
