@@ -110,7 +110,7 @@ nameByAccForm.addEventListener('submit', (event) => {
 filterIpForm.addEventListener('submit', (event) => {
   event.preventDefault()
   resultDoms[2].innerHTML = 'loading ...'
-  execCmd(`filter_ip&args=${filterIpIp.value} logfile`, showResultFilterIp, filterIpIp.value)
+  execCmd(`filter_ip&args=${filterIpIp.value} latest`, showResultFilterIp, filterIpIp.value)
 })
 
 const url = new URL(document.location)
@@ -138,7 +138,7 @@ if (name_by_acc) {
 }
 if (filter_ip) {
   resultDoms[2].innerHTML = 'loading ...'
-  execCmd(`filter_ip&args=${filter_ip} ${logfile || 'logfile'}`, showResultFilterIp, filter_ip)
+  execCmd(`filter_ip&args=${filter_ip} ${logfile || 'latest'}`, showResultFilterIp, filter_ip)
 }
 
 const onTick = () => {
