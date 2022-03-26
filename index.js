@@ -112,11 +112,7 @@ http.createServer((request, response) => {
       response.end(JSON.stringify({ error: 'missing arg: ip' }))
       return
     }
-    if (args[1] === undefined) {
-      response.end(JSON.stringify({ error: 'missing arg: logfile' }))
-      return
-    }
-    const logPath = ShellGetLatestLog.run()
+    const logPath = args[1] || ShellGetLatestLog.run()
     response.end(JSON.stringify({ message: 'filter chat', stdout: ShellChatByIp.run(args[0], logPath) }))
   } else if (cmd === 'get_logfiles') {
     response.end(JSON.stringify({ message: 'logfiles', stdout: ShellGetLogfiles.run() }))
