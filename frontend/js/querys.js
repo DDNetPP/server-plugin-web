@@ -58,6 +58,10 @@ const showResultAcc = (result, type) => {
 }
 
 const showResultFilterIp = (result, type) => {
+  if(result === '') {
+    resultDoms[2].innerHTML = 'No matches found in latest logfile.'
+    return
+  }
   resultDoms[2].innerHTML = generateResult(result, type)
 }
 
