@@ -50,8 +50,9 @@ const ShellAccByName = new ShellCommand('bash ./lib/plugins/server-plugin-web/bi
 const ShellNameByAcc = new ShellCommand('bash ./lib/plugins/server-plugin-web/bin/tw_get_name_by_acc -a')
 const ShellEcon = new ShellCommand('bash ./lib/econ.sh')
 const ShellGetLatestLog = new ShellCommand('./show_log.sh --filepath')
-const ShellGetLogfiles = new ShellCommand("./lib/eval_lib.sh 'find $LOGS_PATH_FULL -type f'")
-const ShellChatByIp = new ShellCommand('bash tw_filter_ip')
+const ShellGetLogfiles = new ShellCommand("cd $(./lib/eval_lib.sh 'echo $LOGS_PATH_FULL') && find . -type f")
+const ShellGetLogfilesSearch = new ShellCommand("cd $(./lib/eval_lib.sh 'echo $LOGS_PATH_FULL') && rg -lF")
+const ShellChatByIp = new ShellCommand("cd $(./lib/eval_lib.sh 'echo $LOGS_PATH_FULL') && bash tw_filter_ip")
 
 const log = (msg) => {
   const ts = new Date()
@@ -115,6 +116,11 @@ http.createServer((request, response) => {
     const logPath = args[1] === 'latest' ? ShellGetLatestLog.run() : args[1]
     response.end(JSON.stringify({ message: 'filter chat', stdout: ShellChatByIp.run(args[0], logPath) }))
   } else if (cmd === 'get_logfiles') {
+    if(args[0] !== undefined) {
+      const logfiles = ShellGetLogfilesSearch.run(args[0])
+      response.end(JSON.stringify({ message: 'logfiles', stdout: logfiles }))
+      return
+    }
     response.end(JSON.stringify({ message: 'logfiles', stdout: ShellGetLogfiles.run() }))
   } else if (cmd === 'econ') {
     if (args[0] === undefined) {

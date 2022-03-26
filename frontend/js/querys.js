@@ -52,8 +52,7 @@ const generateResultTraffic = (result, type) => {
 const generateResultLogfiles = (result, ipAddr) => {
   let hrefResult = ''
   result.split('\n').forEach((row) => {
-    const dirs = row.split('/')
-    hrefResult += `<a href="?filter_ip=${ipAddr}&logfile=${row}">${dirs[dirs.length - 1]}</a>\n`
+    hrefResult += `<a href="?filter_ip=${ipAddr}&logfile=${row}">${row}</a>\n`
   })
   return hrefResult
 }
@@ -69,14 +68,19 @@ const showResultAcc = (result, type) => {
 const showResultFilterIp = (result, ipAddr) => {
   if(result === '') {
     resultDoms[2].innerHTML = 'No matches found in latest logfile.'
-    execCmd(`get_logfiles`, showResultGetLogfiles, ipAddr)
+    execCmd(`get_logfiles?args=${ipAddr}`, showResultGetLogfiles, ipAddr)
     return
   }
   resultDoms[2].innerHTML = result
 }
 
 const showResultGetLogfiles = (result, ipAddr) => {
-  resultDoms[2].innerHTML = 'No matches found in latest logfile. Try one of the older ones:\n'
+  if(result === '' || result === undefined) {
+    resultDoms[2].innerHTML = 'No matches found in any logfile.'
+    return
+  }
+  resultDoms[2].innerHTML = 'No matches found in latest logfile.\n'
+  resultDoms[2].innerHTML = 'Try one of the older ones that include your search:\n'
   resultDoms[2].innerHTML += generateResultLogfiles(result, ipAddr)
 }
 
