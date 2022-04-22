@@ -76,7 +76,7 @@ function setup_apache_log_server() {
 
 	sudo mkdir -p "$CFG_POST_LOGS_DIR"/node_modules/chart.js/dist
 	sudo mkdir -p "$CFG_POST_LOGS_DIR"/{js,css}
-	sudo touch "$CFG_POST_LOGS_DIR"/js/{chart,cpu,main,notifications,querys}.js
+	sudo touch "$CFG_POST_LOGS_DIR"/js/{chart,cpu,main,frontpage,notifications,querys}.js
 	sudo touch "$CFG_POST_LOGS_DIR"/css/style.css
 	sudo touch "$CFG_POST_LOGS_DIR"/node_modules/chart.js/dist/Chart.min.js
 
@@ -86,7 +86,7 @@ full_gdb.txt,log_gdb.txt,money.txt,\
 ddos.txt,\
 server_log.txt,\
 paste.txt,raw_build.txt,status.txt,gprof.svg,\
-cpu.html,querys.html}
+cpu.html,querys.html,index.html}
 
 	sudo "$groupadd" "$web_group"
 	sudo "$usermod" -aG "$web_group" "$CFG_UNIX_USER"

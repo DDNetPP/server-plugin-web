@@ -42,3 +42,25 @@ form {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
     background: white;
 }
+
+.button {
+    display: block;
+    background: #4E9CAF;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+}
+
+.button:hover {
+    display: block;
+    background: #5ec4dd;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+}

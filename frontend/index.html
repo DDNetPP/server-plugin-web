@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teeworlds web panel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div style="position: relative;">
+        <iframe id="cpu-dashboard" src="cpu.html" frameborder="0" width="800px" height="400px"></iframe>
+        <a href="cpu.html" style="position: absolute; top: 0; left: 0; display: inline-block; width: 800px; height: 400px; z-index: 5;"></a>
+    </div>
+    <a href="querys.html" class="button">Querys & Network traffic</a><br>
+    <code id="crashes-container" class="code-snippet" style="text-decoration: none;height: 80px">
+    </code>
+    <br>
+    <code id="server-log-container" class="code-snippet" style="text-decoration: none;height: 200px;">
+    </code>
+    <br>
+    <br>
+    <a href="raw_build.txt" class="build-status-wrapper" style="padding: 5px"><span>raw_build.txt</span> <span id="build-status">LOADING</span></a><br>
+    <br>
+    <a href="donations_sum.html">donations_sum.html</a><br>
+    <a href="donations.txt">donations.txt</a><br>
+    <a href="gprof.svg">gprof.svg</a><br>
+    <a href="log_gdb.txt">log_gdb.txt</a><br>
+    <a href="full_gdb.txt">full_gdb.txt</a><br>
+    <a href="money.txt">money.txt</a><br>
+    <!-- <a href="status.txt">status.txt</a><br> -->
+    <!-- <a href="ddos.txt">ddos.txt</a><br> -->
+    <!-- <a href="cpu.html">cpu.html</a><br> -->
+    <script src="js/frontpage.js"></script>
+</body>
+</html>
