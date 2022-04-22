@@ -97,10 +97,10 @@ cpu.html,querys.html}
 	sudo chmod 664 "$CFG_POST_LOGS_DIR"/*
 	sudo chmod 664 "$CFG_POST_LOGS_DIR"/js/*
 	sudo chmod 664 "$CFG_POST_LOGS_DIR"/css/*
-	sudo chmod 664 "$CFG_POST_LOGS_DIR"/node_modules/chart.js/dist/*
 	sudo chmod 111 "$CFG_POST_LOGS_DIR"/{node_modules,css,js}
 	sudo chmod 111 "$CFG_POST_LOGS_DIR"/node_modules/chart.js/
 	sudo chmod 111 "$CFG_POST_LOGS_DIR"/node_modules/chart.js/dist
+	sudo chmod 664 "$CFG_POST_LOGS_DIR"/node_modules/chart.js/dist/Chart.min.js
 
 	if [ ! -f "$CFG_POST_LOGS_DIR"/.htpasswd ]
 	then
