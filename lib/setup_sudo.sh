@@ -68,7 +68,7 @@ function setup_apache_log_server() {
 	if [ -x "$(command -v apt)" ]
 	then
 		sudo apt update && sudo apt upgrade
-		sudo apt install apache2 graphviz python3 python3-pip
+		sudo apt install apache2 graphviz python3 python3-pip gawk
 	elif [ -x "$(command -v pacman)" ]
 	then
 		sudo pacman -S --needed graphviz python python-pip
