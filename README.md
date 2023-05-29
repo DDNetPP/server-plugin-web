@@ -42,6 +42,13 @@ pl_web_api_host=https://api-myserver.mydomain.com
 pl_web_api_token=xxx
 ```
 
+Install tcpdump and tshark and let this command running as root
+```
+./lib/traffic_logger.sh
+```
+its more secure to copy the whole server directory into a folder owned by root
+otherwise one can do priv escalation by writing into lib/traffic_logger.sh
+
 ### updating
 
 login as ``teeworlds`` user
