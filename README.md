@@ -35,6 +35,13 @@ cd /home/teeworlds/myserver/
 ./lib/plugins/server-plugin-web/setup_user.sh
 ```
 
+Add those to your server.cnf
+```
+post_logs_dir=/var/www/html/myserver
+pl_web_api_host=https://api-myserver.mydomain.com
+pl_web_api_token=xxx
+```
+
 ### updating
 
 login as ``teeworlds`` user
