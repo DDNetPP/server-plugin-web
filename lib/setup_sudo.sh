@@ -84,7 +84,7 @@ function setup_apache_log_server() {
 crashes.txt,donations_sum.html,donations.txt,\
 full_gdb.txt,log_gdb.txt,money.txt,\
 ddos.txt,\
-server_log.txt,\
+server_log.txt,server_log.txt.tmp\
 paste.txt,raw_build.txt,status.txt,gprof.svg,\
 cpu.html,querys.html,index.html}
 
